@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GTA VI Trophy Guide &amp; Tracker — Road to the Platinum</title>
+<link rel="icon" href="data:,">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,6 +19,7 @@
     <div>
       <p class="big" id="progressText">0 of 55 earned</p>
       <p class="muted" id="gradeText">0 platinum &middot; 0 gold &middot; 0 silver &middot; 0 bronze</p>
+      <div id="gradeDetail" class="grade-detail" aria-label="Progress by grade"></div>
       <div class="bar"><div id="barFill"></div></div>
       <p class="muted" id="nextUp"></p>
     </div>
@@ -62,7 +64,7 @@
         <option value="unearned">Unearned only</option>
       </select>
     </label>
-    <label class="spoiler"><input id="spoiler" type="checkbox" checked> Hide story spoilers until earned</label>
+    <label class="spoiler"><input id="spoiler" type="checkbox" checked> Hide hidden trophies until earned (28 hidden on PSN)</label>
     <button id="export" type="button">Export progress</button>
     <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
     <button id="reset" type="button">Reset</button>
@@ -74,6 +76,7 @@
 <section id="tab-roadmap" class="tabpage">
   <h2>Roadmap to the platinum</h2>
   <p>Work the phases in order. Story first, because several trophies need a partner or a story moment that is only available while the story is running; collectibles and grinds last, because they are all doable in free roam after the story ends.</p>
+  <div id="phaseProgress" class="phases" aria-label="Progress per roadmap phase"></div>
   <ol class="roadmap">
     <li><strong>Phase 1 — Story (18 trophies).</strong> Play the main story from Gone Fishing to the final mission. This earns every chapter trophy, the named story missions and the contact strands. Do not finish the final mission until Phase 2 is done.</li>
     <li><strong>Phase 2 — Missables (5 trophies).</strong> Before the final mission, clear Hot Together, Retail Therapy, Catch Me If You Can, Actions Speak Louder and Bad Luck, I Guess. Each needs a partner, a choice, or a one-off moment — see the Missables tab. Keep a save from before any story choice.</li>
@@ -97,6 +100,7 @@
     <li>Names, descriptions and grades: the official GTA VI trophy list as published on PSN (psnprofiles.com/trophies/43531-grand-theft-auto-vi) and Exophase (exophase.com/game/grand-theft-auto-vi-psn/trophies/), frozen 2026-11-18 — 55 trophies: 1 platinum, 2 gold, 6 silver, 46 bronze.</li>
     <li>Guides: written in this guide's own words from the official descriptions. Each trophy's guide cites the official description as its source. No text is copied from any other guide.</li>
     <li>Kinds (story, collectible, activity, combat, exploration, grind, choice) and the missable flags are derived from the official descriptions — a trophy is flagged missable when its description ties it to a partner, a choice, or a one-off moment.</li>
+    <li>Hidden flags: 28 of the 55 trophies are hidden on PSN (1 gold, 27 bronze) — the chapter and mission trophies, the five contact-strand finales, the choice trophies, and the trophies whose descriptions are deliberately cryptic. The spoiler setting hides exactly those 28 until you earn them.</li>
     <li>This guide is an unofficial fan-made tracker. Grand Theft Auto and GTA are trademarks of Rockstar Games; no Rockstar logo or artwork is used here.</li>
   </ul>
 </section>

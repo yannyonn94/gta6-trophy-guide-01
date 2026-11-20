@@ -4,13 +4,18 @@
 // and screenshots/ from beside this file to /output and writes /output/dossier.json, the summary the judge reads (your
 // screenshots, the first load's files and bytes, and your source), with the vendored make.fun library. Leave
 // vendor/makefun-frontend.ts as it is: the scorer requires dossier.json to be byte for byte what its own copy writes.
+// Screenshots: 4 JPEGs in screenshots/ (cover first by name) — retake them with a headless browser whenever the UI
+// changes, and keep each under 256 KiB with the long side at most 1280 px and the short side at least 480 px.
 //
 // Built entry: "Road to the Platinum" — a full trophy guide and tracker. app/ holds the
 // tracker (checklist over all 55 official trophies, localStorage progress, export/import,
-// filters by grade/kind/status, text search, spoiler setting), a 6-phase roadmap to the
-// platinum, a missables page (5 trophies to clear before the final mission), and a sources
-// page. app/data/trophies.json carries the official list with an original guide, kind,
-// missable and hidden flag per trophy, all written from the official descriptions.
+// filters by grade/kind/status, text search, spoiler setting that hides the 28 trophies
+// hidden on PSN until earned, and a per-grade progress panel with a bar for each grade),
+// a 6-phase roadmap to the platinum with earned/total progress per phase, a missables
+// page (5 trophies to clear before the final mission), and a sources page.
+// app/data/trophies.json carries the official list with an original guide, kind,
+// missable and hidden flag per trophy, all written from the official descriptions;
+// the hidden flags match PSN exactly: 28 hidden (1 gold, 27 bronze).
 //
 // Serve it locally with `node serve.ts`, then open http://localhost:8080.
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:

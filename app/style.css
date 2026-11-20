@@ -75,6 +75,31 @@ h1::after {
 .muted { color: var(--muted); font-size: 13px; margin: 4px 0; }
 .bar { height: 8px; background: #3a2358; border-radius: 4px; overflow: hidden; margin: 8px 0 4px; }
 .bar div { height: 100%; background: linear-gradient(90deg, var(--pink), var(--orange)); width: 0; }
+/* Per-grade progress detail: one row per grade with its own small bar. */
+.grade-detail { display: grid; gap: 5px; margin: 8px 0 2px; }
+.grade-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.grade-row-label { width: 58px; flex: none; color: var(--muted); }
+.grade-row-bar { flex: 1; height: 6px; background: #3a2358; border-radius: 3px; overflow: hidden; }
+.grade-row-fill { display: block; height: 100%; border-radius: 3px; }
+.grade-row-fill.grade-platinum { background: var(--plat); }
+.grade-row-fill.grade-gold { background: var(--gold); }
+.grade-row-fill.grade-silver { background: var(--silver); }
+.grade-row-fill.grade-bronze { background: var(--bronze); }
+.grade-row-count { width: 34px; flex: none; text-align: right; font-weight: 700; }
+/* Roadmap phase progress: numbered phase cards with a bar each; the first
+   unfinished phase is highlighted as the one to work on now. */
+.phases { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; margin: 14px 0 6px; }
+.phase { display: flex; gap: 12px; align-items: flex-start; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.phase-current { border-color: var(--orange); }
+.phase-done { border-color: var(--pink); }
+.phase-num { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 14px; background: var(--panel2); border: 1px solid var(--line); }
+.phase-current .phase-num { background: var(--orange); border-color: var(--orange); color: #1a0b2e; }
+.phase-done .phase-num { background: var(--pink); border-color: var(--pink); color: #fff; }
+.phase-body { flex: 1; display: grid; gap: 6px; }
+.phase-body strong { font-size: 14px; }
+.phase-bar { display: block; height: 6px; background: #3a2358; border-radius: 3px; overflow: hidden; }
+.phase-bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--pink), var(--orange)); }
+.phase-count { font-size: 12px; color: var(--muted); }
 .tabs {
   display: flex;
   gap: 8px;
@@ -140,11 +165,14 @@ h1::after {
   transition: border-color .15s ease, transform .15s ease;
 }
 .card:hover { border-color: var(--pink); transform: translateY(-1px); }
-.card.earned { border-color: var(--pink); }
+.card.earned { border-color: var(--pink); background: linear-gradient(180deg, #241338, var(--panel)); }
+.card.earned .meta::after { content: " · ✓ Earned"; color: var(--pink); }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
   outline: 2px solid var(--orange);
   outline-offset: 2px;
 }
+.tabs button:hover { border-color: var(--pink); }
+.controls input[type="search"]:focus, .controls select:focus { border-color: var(--pink); outline: none; }
 .card-head { display: flex; gap: 10px; align-items: flex-start; }
 .card-head input[type="checkbox"] { width: 20px; height: 20px; margin-top: 4px; flex: none; accent-color: var(--pink); cursor: pointer; }
 .card-head h3 { margin: 0; font-size: 17px; line-height: 1.25; flex: 1; }

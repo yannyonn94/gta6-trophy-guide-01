@@ -30,7 +30,11 @@ function gradeIcon(grade) {
 
 function trophyCard(t) {
   const isEarned = earned.has(t.name);
-  const hidden = spoiler && t.kind === 'story' && !isEarned;
+  // Spoiler hiding follows the official hidden flag, not the kind: 28 trophies
+  // are hidden on PSN (story and chapter trophies, contact-strand finales,
+  // choice trophies, and the deliberately cryptic one-liners), and several of
+  // them are activities or combat, not story.
+  const hidden = spoiler && t.hidden && !isEarned;
   const card = document.createElement('article');
   card.className = 'card' + (isEarned ? ' earned' : '');
   const head = document.createElement('div');
@@ -50,7 +54,7 @@ function trophyCard(t) {
   name.textContent = hidden ? 'Hidden trophy — earn it to reveal' : t.name;
   const desc = document.createElement('p');
   desc.className = 'desc';
-  desc.textContent = hidden ? 'A story trophy. Its name and description stay hidden until you earn it.' : t.description;
+  desc.textContent = hidden ? 'A hidden trophy. Its name and description stay hidden until you earn it.' : t.description;
   title.append(name, desc);
   const badge = document.createElement('span');
   badge.className = 'grade grade-' + t.grade;
@@ -59,7 +63,8 @@ function trophyCard(t) {
   card.append(head);
   const meta = document.createElement('p');
   meta.className = 'meta';
-  meta.textContent = KIND_LABEL[t.kind] + (t.missable ? ' · ⚠ Missable — do before the final mission' : '');
+  meta.textContent = KIND_LABEL[t.kind] + (t.missable ? ' · ⚠ Missable — do before the final mission' : '')
+    + (t.hidden && !isEarned ? ' · Hidden on PSN' : '');
   card.append(meta);
   const guide = document.createElement('p');
   guide.className = 'guide';
@@ -72,6 +77,77 @@ function trophyCard(t) {
   src.textContent = 'Source: ' + t.source;
   card.append(src);
   return card;
+}
+
+// Per-grade progress detail: earned/total and a small bar for each grade, so
+// the player can see at a glance which grade is holding the platinum back.
+function renderGradeDetail(byGrade) {
+  const el = $('gradeDetail');
+  if (!el) return;
+  const totals = {};
+  for (const t of trophies) totals[t.grade] = (totals[t.grade] ?? 0) + 1;
+  el.replaceChildren(...['platinum', 'gold', 'silver', 'bronze'].map((g) => {
+    const row = document.createElement('div');
+    row.className = 'grade-row';
+    const label = document.createElement('span');
+    label.className = 'grade-row-label';
+    label.textContent = GRADE_LABEL[g];
+    const bar = document.createElement('span');
+    bar.className = 'grade-row-bar';
+    const fill = document.createElement('span');
+    fill.className = 'grade-row-fill grade-' + g;
+    fill.style.width = ((byGrade[g] ?? 0) / totals[g]) * 100 + '%';
+    bar.append(fill);
+    const count = document.createElement('span');
+    count.className = 'grade-row-count';
+    count.textContent = (byGrade[g] ?? 0) + '/' + totals[g];
+    row.append(label, bar, count);
+    return row;
+  }));
+}
+
+// Roadmap phase progress: each phase is a slice of the trophy list, so the
+// roadmap can show earned/total per phase and mark the first unfinished one
+// as the phase to work on now.
+const PHASES = [
+  { n: 1, title: 'Story', match: (t) => t.kind === 'story' },
+  { n: 2, title: 'Missables', match: (t) => t.missable },
+  { n: 3, title: 'Activities', match: (t) => t.kind === 'activity' },
+  { n: 4, title: 'Collectibles & exploration', match: (t) => t.kind === 'collectible' || t.kind === 'exploration' },
+  { n: 5, title: 'Combat, heists & money', match: (t) => t.kind === 'combat' || t.kind === 'grind' },
+  { n: 6, title: 'Platinum', match: (t) => t.kind === 'platinum' },
+];
+
+function renderPhaseProgress() {
+  const el = $('phaseProgress');
+  if (!el) return;
+  const firstOpen = PHASES.find((p) => trophies.some((t) => p.match(t) && !earned.has(t.name)));
+  el.replaceChildren(...PHASES.map((p) => {
+    const inPhase = trophies.filter(p.match);
+    const done = inPhase.filter((t) => earned.has(t.name)).length;
+    const item = document.createElement('div');
+    item.className = 'phase' + (done === inPhase.length ? ' phase-done' : '')
+      + (firstOpen && p.n === firstOpen.n ? ' phase-current' : '');
+    const num = document.createElement('span');
+    num.className = 'phase-num';
+    num.textContent = done === inPhase.length ? '✓' : String(p.n);
+    const body = document.createElement('div');
+    body.className = 'phase-body';
+    const title = document.createElement('strong');
+    title.textContent = 'Phase ' + p.n + ' — ' + p.title;
+    const bar = document.createElement('span');
+    bar.className = 'phase-bar';
+    const fill = document.createElement('span');
+    fill.style.width = (done / inPhase.length) * 100 + '%';
+    bar.append(fill);
+    const count = document.createElement('span');
+    count.className = 'phase-count';
+    count.textContent = done + '/' + inPhase.length + ' earned'
+      + (firstOpen && p.n === firstOpen.n ? ' · work on this now' : '');
+    body.append(title, bar, count);
+    item.append(num, body);
+    return item;
+  }));
 }
 
 function filtered() {
@@ -104,6 +180,7 @@ function render() {
   for (const t of trophies) if (earned.has(t.name)) byGrade[t.grade] = (byGrade[t.grade] ?? 0) + 1;
   $('gradeText').textContent = ['platinum', 'gold', 'silver', 'bronze']
     .map((g) => (byGrade[g] ?? 0) + ' ' + g).join(' · ');
+  renderGradeDetail(byGrade);
   // Per-kind progress, so the player can see which part of the game is left.
   let kindLine = document.getElementById('kindText');
   if (!kindLine) {
@@ -126,6 +203,7 @@ function render() {
     ? 'Next up: ' + next.name + (next.missable ? ' (missable — do it soon)' : '')
     : 'All 55 earned — the platinum is yours.';
   missableEl.replaceChildren(...trophies.filter((t) => t.missable).map(trophyCard));
+  renderPhaseProgress();
 }
 
 document.querySelectorAll('.tabs button').forEach((btn) => {
