@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GTA VI Trophy Guide &amp; Tracker — Road to the Platinum</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div>
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies</p>
+    <h1>Road to the Platinum</h1>
+    <p class="sub">An offline trophy guide and tracker. Tick off trophies as you earn them — progress is saved in your browser, and every guide is written from the official trophy list.</p>
+  </div>
+  <div class="progress-card" aria-label="Overall progress">
+    <div class="ring" id="ring"><span id="ringText">0%</span></div>
+    <div>
+      <p class="big" id="progressText">0 of 55 earned</p>
+      <p class="muted" id="gradeText">0 platinum &middot; 0 gold &middot; 0 silver &middot; 0 bronze</p>
+      <div class="bar"><div id="barFill"></div></div>
+      <p class="muted" id="nextUp"></p>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <button type="button" data-tab="tracker" class="active">Tracker</button>
+  <button type="button" data-tab="roadmap">Roadmap to Platinum</button>
+  <button type="button" data-tab="missable">Missables (5)</button>
+  <button type="button" data-tab="sources">Sources</button>
+</nav>
+
+<section id="tab-tracker" class="tabpage active">
+  <div class="controls">
+    <input id="search" type="search" placeholder="Search trophies by name or description…" aria-label="Search trophies">
+    <label>Grade
+      <select id="grade">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+    </label>
+    <label>Kind
+      <select id="kind">
+        <option value="all">All kinds</option>
+        <option value="story">Story</option>
+        <option value="collectible">Collectibles</option>
+        <option value="activity">Activities</option>
+        <option value="combat">Combat &amp; heists</option>
+        <option value="exploration">Exploration</option>
+        <option value="grind">Grind &amp; money</option>
+        <option value="choice">Choices &amp; missables</option>
+      </select>
+    </label>
+    <label>Status
+      <select id="status">
+        <option value="all">Earned &amp; unearned</option>
+        <option value="earned">Earned only</option>
+        <option value="unearned">Unearned only</option>
+      </select>
+    </label>
+    <label class="spoiler"><input id="spoiler" type="checkbox" checked> Hide story spoilers until earned</label>
+    <button id="export" type="button">Export progress</button>
+    <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
+    <button id="reset" type="button">Reset</button>
+  </div>
+  <p class="muted" id="count"></p>
+  <div id="list" class="cards"></div>
+</section>
+
+<section id="tab-roadmap" class="tabpage">
+  <h2>Roadmap to the platinum</h2>
+  <p>Work the phases in order. Story first, because several trophies need a partner or a story moment that is only available while the story is running; collectibles and grinds last, because they are all doable in free roam after the story ends.</p>
+  <ol class="roadmap">
+    <li><strong>Phase 1 — Story (18 trophies).</strong> Play the main story from Gone Fishing to the final mission. This earns every chapter trophy, the named story missions and the contact strands. Do not finish the final mission until Phase 2 is done.</li>
+    <li><strong>Phase 2 — Missables (5 trophies).</strong> Before the final mission, clear Hot Together, Retail Therapy, Catch Me If You Can, Actions Speak Louder and Bad Luck, I Guess. Each needs a partner, a choice, or a one-off moment — see the Missables tab. Keep a save from before any story choice.</li>
+    <li><strong>Phase 3 — Activities (13 trophies).</strong> Shooting Range gold medals, drone races, 20 different races, fishing against Cal, arcade games, stranger strands, the bowling alley and the Scooter Bros app. None of these is missable; work them in any order.</li>
+    <li><strong>Phase 4 — Collectibles &amp; exploration (6 trophies).</strong> Meditation spots, collectible card sets, WAiNK at 100 locations, 100 vehicles and exploring all of Leonida. Sweep the map region by region.</li>
+    <li><strong>Phase 5 — Combat, heists &amp; money (12 trophies).</strong> Combat Focus, bank vaults, armored trucks, gang operations, the jewelry store, stunts, challenges, laundering $250,000 of Marked Bills, spending $100,000 and buying every garage. These stack up naturally in free roam.</li>
+    <li><strong>Phase 6 — The platinum.</strong> Vice Got a Price! pops automatically once the other 54 are earned. The last trophy standing is usually A Long Road (100% Completion) — check the completion list in-game for what is left.</li>
+  </ol>
+  <p class="muted">Phase counts come from the official descriptions in this guide's data file: 18 story, 5 choice/missable, 13 activities, 3 collectibles + 3 exploration, 7 combat + 5 grind, and the platinum itself — 55 in all.</p>
+</section>
+
+<section id="tab-missable" class="tabpage">
+  <h2>Missable trophies — do these before the final mission</h2>
+  <p>Five trophies depend on a partner being available, a story choice, or a one-off moment. Everything else in the list can be earned in free roam after the story ends.</p>
+  <div id="missableList" class="cards"></div>
+</section>
+
+<section id="tab-sources" class="tabpage">
+  <h2>Sources</h2>
+  <ul>
+    <li>Names, descriptions and grades: the official GTA VI trophy list as published on PSN (psnprofiles.com/trophies/43531-grand-theft-auto-vi) and Exophase (exophase.com/game/grand-theft-auto-vi-psn/trophies/), frozen 2026-11-18 — 55 trophies: 1 platinum, 2 gold, 6 silver, 46 bronze.</li>
+    <li>Guides: written in this guide's own words from the official descriptions. Each trophy's guide cites the official description as its source. No text is copied from any other guide.</li>
+    <li>Kinds (story, collectible, activity, combat, exploration, grind, choice) and the missable flags are derived from the official descriptions — a trophy is flagged missable when its description ties it to a partner, a choice, or a one-off moment.</li>
+    <li>This guide is an unofficial fan-made tracker. Grand Theft Auto and GTA are trademarks of Rockstar Games; no Rockstar logo or artwork is used here.</li>
+  </ul>
+</section>
+
+<footer>
+  <p class="muted">Offline by design: this page loads nothing from the network. Progress lives only in your browser's localStorage until you export it.</p>
+</footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>
